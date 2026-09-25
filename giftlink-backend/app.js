@@ -23,10 +23,10 @@ app.use(express.json());
 
 // Route files
 // Gift API Task 1: import the giftRoutes and store in a constant called giftroutes
-//{{insert code here}}
+const giftRoutes = require('./routes/giftRoutes');
 
 // Search API Task 1: import the searchRoutes and store in a constant called searchRoutes
-//{{insert code here}}
+const searchRoutes = require('./routes/searchRoutes');
 
 
 const pinoHttp = require('pino-http');
@@ -36,10 +36,31 @@ app.use(pinoHttp({ logger }));
 
 // Use Routes
 // Gift API Task 2: add the giftRoutes to the server by using the app.use() method.
-//{{insert code here}}
+app.use('/api/gifts', giftRoutes);
 
 // Search API Task 2: add the searchRoutes to the server by using the app.use() method.
-//{{insert code here}}
+app.use('/api/search', searchRoutes);
+
+// Add authRoutes
+const authRoutes = require('./routes/authRoutes');
+app.use('/api/auth', authRoutes);
+
+// Sentiment Proxy
+app.get('/api/sentiment', async (req, res) => {
+    try {
+        const sentence = req.query.sentence;
+        const sentimentUrl = process.env.SENTIMENT_URL || 'http://localhost:3061';
+        const response = await fetch(`${sentimentUrl}/sentiment?sentence=${encodeURIComponent(sentence)}`);
+        if (!response.ok) {
+            throw new Error('Sentiment service failed');
+        }
+        const data = await response.json();
+        res.json(data);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ error: 'Sentiment analysis failed' });
+    }
+});
 
 
 // Global Error Handler

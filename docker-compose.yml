@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./giftlink-backend
+    ports:
+      - "3060:3060"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017
+      - JWT_SECRET=setasecret
+      - SENTIMENT_URL=http://sentiment:3061
+    depends_on:
+      - mongo
+      - sentiment
+
+  frontend:
+    build: ./giftlink-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_BACKEND_URL=http://localhost:3060
+    depends_on:
+      - backend
+
+  sentiment:
+    build: ./sentiment
+    ports:
+      - "3061:3061"
+    environment:
+      - PORT=3061
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"

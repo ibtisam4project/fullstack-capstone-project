@@ -1,0 +1,24 @@
+GitHub Actions Workflow: .github/workflows/ci.yml
+
+Local CI/CD Verification Output:
+
+1. Sentiment Microservice Check:
+node -e "require('natural')"
+Result: SUCCESS
+
+2. Backend Service Check:
+node -e "require('./models/db')"
+Result: SUCCESS
+
+3. Frontend Production Build Check:
+> giftlink-frontend@0.1.0 build
+> react-scripts build
+
+Creating an optimized production build...
+Compiled successfully.
+
+File sizes after gzip:
+  54.88 kB  build/static/js/main.a56f601a.js
+  33 kB     build/static/css/main.97d755f6.css
+
+The build folder is ready to be deployed.

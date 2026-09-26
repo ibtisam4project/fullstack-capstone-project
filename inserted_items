@@ -1,0 +1,6 @@
+MongoDB import command:
+node util/import-mongo/index.js
+
+Output:
+Connected successfully to server
+Inserted documents: 16

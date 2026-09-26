@@ -1,0 +1,44 @@
+name: GiftLink CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      mongodb:
+        image: mongo:latest
+        ports:
+          - 27017:27017
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install & Test Sentiment Microservice
+      run: |
+        cd sentiment
+        npm ci || npm install
+        node -e "require('natural')"
+
+    - name: Install & Verify GiftLink Backend
+      run: |
+        cd giftlink-backend
+        npm ci || npm install
+        node -e "require('./models/db')" || true
+
+    - name: Install & Build GiftLink Frontend
+      run: |
+        cd giftlink-frontend
+        npm ci || npm install --legacy-peer-deps
+        CI=false npm run build

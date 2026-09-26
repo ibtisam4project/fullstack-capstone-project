@@ -4,7 +4,7 @@ const connectToDatabase = require('../models/db');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || 'setasecret';
 
 router.post('/register', async (req, res) => {
     try {
@@ -25,12 +25,13 @@ router.post('/register', async (req, res) => {
             createdAt: new Date()
         });
         const payload = {
-            user: { id: newUser.insertedId }
+            user: { id: newUser.insertedId.toString() }
         };
         const authtoken = jwt.sign(payload, JWT_SECRET);
         res.json({ authtoken, email: req.body.email });
     } catch (e) {
-        return res.status(500).send('Internal server error');
+        console.error(e);
+        return res.status(500).json({ error: 'Internal server error', details: e.message });
     }
 });
 
@@ -78,7 +79,7 @@ router.put('/update', async (req, res) => {
         const authtoken = jwt.sign(payload, JWT_SECRET);
         res.json({ authtoken });
     } catch (e) {
-        return res.status(500).send('Internal server error');
+        return res.status(500).json({ error: 'Internal server error', details: e.message });
     }
 });
 

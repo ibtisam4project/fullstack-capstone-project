@@ -1,36 +1,53 @@
-/* Style for image placeholder */
+.details-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
 .image-placeholder-large {
-    /* Task 1 styling */
-    {{insert code here}}
+  width: 100%;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  border-radius: 8px;
+  color: #666;
 }
 
-/* Style for product image */
-.product-image-large {
-    /* Task 2 styling */
-    {{insert code here}}
+.details-content {
+  margin-top: 1.5rem;
 }
 
-/* Style for 'no image available' placeholder */
-.no-image-available-large {
-    /* Task 3 styling */
-    {{insert code here}}
+.details-content h1 {
+  margin-bottom: 1rem;
 }
 
-/* Style for card header */
-.card-header {
-    /* Task 4 styling */
-    {{insert code here}}
+.details-content p {
+  line-height: 1.6;
 }
 
-/* Style for details title */
-.details-title {
-    /* Task 5 styling */
-    {{insert code here}}
+.comment-section {
+  margin-top: 2rem;
 }
 
-/* Style for comments section */
-.comments-section {
-    /* Task 6 styling */
-    {{insert code here}}
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
+.comment-form textarea {
+  min-height: 100px;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.comment-form button {
+  width: fit-content;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
